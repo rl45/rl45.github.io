@@ -184,7 +184,7 @@ d3.json("SouthAfrica.json").then(function (topology) {
         console.log(error)
     })
 
-
+    //Returns a string format featuring RGB
     function rgb(r, g, b){
         return "rgb("+r+","+g+","+b+")";
     }
