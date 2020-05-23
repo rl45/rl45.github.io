@@ -3,8 +3,6 @@
 var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
-var scale = Math.min(width * 1.2, height * 2.1);
-
 
 /*
 Projection is a method by which 3D space 'projects' onto 2D plane
@@ -20,17 +18,17 @@ var projection = d3.geoMercator()
 
 /*Issue with map not showing when adding .projection(projection)
         Perhaps its moving the map outside of the SVG??
-        Only works when remove .projection, but map is small
+        Only works when remove .projection, but map is small. The issue was that I wasn't centering the projection so it could have been looking at the ocean
 */
 var path = d3.geoPath()
     .projection(projection);
 
-
+//Color domain ranges from 1 to 350 representing one hundred thousand people
 var color = d3.scaleThreshold()
     .domain([1, 10, 50, 100, 150, 200, 250, 300, 350])
     .range(d3.schemeOrRd[9]);
 
-//Range for X. In our case, 1 to 150 thousand people density
+//Range for X. In our case, 1 to 350 thousand people density
 var x = d3.scaleSqrt()
     .domain([0, 350])
     .rangeRound([440, 950]);
@@ -71,7 +69,6 @@ g.call(d3.axisBottom(x)
     .tickValues(color.domain()))
     .select(".domain")
     .remove();
-
 
 
 d3.json("SouthAfrica.json").then(function (topology) {
@@ -192,7 +189,7 @@ d3.json("SouthAfrica.json").then(function (topology) {
         return "rgb("+r+","+g+","+b+")";
     }
   
-        //Calculating it for the key
+        //Calculating it for the color range
         function divide(){    
         var n = [    
             5123400.7305000005/100000,
